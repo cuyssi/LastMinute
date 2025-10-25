@@ -1,0 +1,39 @@
+<app-carousel></app-carousel>
+<main class="mt-8 flex flex-col lg:flex-row w-full h-full justify-between p-4 gap-12">
+  <section class="order-1 lg:order-0 flex flex-col w-full h-full justify-between gap-4 px-4">
+    <div class="subbg-dynamic subtext-dynamic p-4 border-2 border-dynamic rounded">
+      <h2 class="text-2xl font-extrabold">Noticias Nacionales</h2>
+    </div>
+    <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      @if(imagenesCards !== null) { @for(img of imagenesCards; track img) {
+      <article>
+        <app-card [img]="img" />
+      </article>
+      } }
+    </div>
+
+    <div class="mt-15 subbg-dynamic subtext-dynamic p-4 border-2 border-dynamic rounded">
+      <h2 class="text-2xl font-extrabold">Noticias Internacionales</h2>
+    </div>
+    <div class="mt-2 grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-8">
+      @if(imagenesHero !== null) { @for(img of imagenesHero; track img) {
+      <article>
+        <app-hero [img]="img" />
+      </article>
+      } }
+    </div>
+  </section>
+
+  <aside
+    class="order-2 lg:order-0 flex flex-col subbg-dynamic border-2 border-dynamic w-full h-auto lg:w-1/3 px-6 rounded-lg shadow-lg"
+  >
+    <h2 class="mt-7 text-center text-3xl subtext-dynamic font-extrabold">Ultimas Noticias</h2>
+    <section class="mt-8 flex flex-col gap-4">
+      @if(imagenesAside !== null) { @for(img of imagenesAside; track img) {
+      <article>
+        <app-card [img]="img" />
+      </article>
+      } }
+    </section>
+  </aside>
+</main>

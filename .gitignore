@@ -1,0 +1,17 @@
+# Frontend (Angular)
+front/node_modules/
+front/dist/
+front/.angular/
+
+# Backend (Python o Node)
+back/venv/
+back/env/
+back/__pycache__/
+back/node_modules/
+
+# Comunes
+.env
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
