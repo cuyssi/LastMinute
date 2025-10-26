@@ -12,16 +12,18 @@
   --bg-dynamic: #afaaaf;
   --subbg-dynamic: #ebd6d1;  
   --text-dynamic: #454648;
+  --titleText-dynamic: #454648;
   --subtext-dynamic: #d04242;
   --border-dynamic: gray;
 }
 
 :root[data-theme='dark'] {
-  --bg-dynamic: #797872;
-  --subbg-dynamic: #8f8983; 
+  --bg-dynamic: #727679;
+  --subbg-dynamic: #69818d; 
   --text-dynamic: #f9fafb;
-  --subtext-dynamic: #a93131;
-  --border-dynamic: rgb(182, 102, 102);
+  --titleText-dynamic: #503535;
+  --subtext-dynamic: #852727;
+  --border-dynamic: rgb(215, 126, 126);
 }
 
 .bg-dynamic {
@@ -43,6 +45,9 @@
     border-color: var(--border-dynamic);
 }
 
+.titleText-dynamic {
+    color: var(--titleText-dynamic);
+}
 
 
 

@@ -1,0 +1,26 @@
+get:
+    summary: Obtener noticias filtradas
+    description: Devuelve una lista de noticias según país y categoría
+    parameters:
+        - name: pais
+          in: query
+          type: string
+          required: false
+          default: es
+          description: Código del país (ISO 3166)
+        - name: categoria
+          in: query
+          type: string
+          required: false
+          default: general
+          description: Categoría de noticias
+    responses:
+    200:
+        description: Lista de noticias
+        content:
+            application/json:
+                example:
+                    - titulo: "España arrasa en la Final 8"
+                      url: "https://sport.es/noticia"
+                      fecha: "2025-10-25"
+                      sentimiento: null

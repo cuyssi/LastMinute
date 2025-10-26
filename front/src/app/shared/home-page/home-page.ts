@@ -1,16 +1,63 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { Notice } from '../../services/notices';
 import { Card } from '../../core/components/card/card';
 import { Carousel } from '../../core/components/carousel/carousel';
 import { Hero } from '../../core/components/hero/hero';
+import { TruncateInteligentePipe } from '../pipes/truncate-inteligente.pipe';
+import { NoticiasCacheService } from '../../services/noticias-cache-service';
 
 @Component({
-  selector: 'app-home-page',
-  imports: [Carousel, Card, Hero],
-  templateUrl: './home-page.html',
-  styleUrl: './home-page.css',
+    selector: 'app-home-page',
+    standalone: true,
+    imports: [
+        HttpClientModule,
+        Carousel,
+        Card,
+        Hero,
+        TruncateInteligentePipe
+    ],
+    templateUrl: './home-page.html',
+    styleUrls: ['./home-page.css']
 })
-export default class HomePage {
-    imagenesCards: string[]=['https://images.pexels.com/photos/3970330/pexels-photo-3970330.jpeg', 'https://images.pexels.com/photos/34183256/pexels-photo-34183256.jpeg', 'https://images.pexels.com/photos/3760260/pexels-photo-3760260.jpeg', 'https://images.pexels.com/photos/34183359/pexels-photo-34183359.jpeg', 'https://images.pexels.com/photos/34183273/pexels-photo-34183273.jpeg', 'https://images.pexels.com/photos/34183353/pexels-photo-34183353.jpeg']
-    imagenesHero: string[]=['https://images.pexels.com/photos/3970330/pexels-photo-3970330.jpeg', 'https://images.pexels.com/photos/3761509/pexels-photo-3761509.jpeg', 'https://images.pexels.com/photos/3760809/pexels-photo-3760809.jpeg', 'https://images.pexels.com/photos/264600/pexels-photo-264600.jpeg']
-    imagenesAside: string[]=['https://images.pexels.com/photos/2872418/pexels-photo-2872418.jpeg', 'https://images.pexels.com/photos/935979/pexels-photo-935979.jpeg', 'https://media.istockphoto.com/id/1477858506/es/foto/noticias-en-l%C3%ADnea-en-tel%C3%A9fono-lectura-de-peri%C3%B3dico-desde-el-sitio-web-maqueta-de-publicaci%C3%B3n.jpg?b=1&s=612x612&w=0&k=20&c=ixKV0_j45qjB6e2qn13FiobCfqbManMxRQfLGK-BuoQ=', 'https://images.pexels.com/photos/1464196/pexels-photo-1464196.jpeg']
+export default class HomePage implements OnInit {
+    noticiasTendencias: Notice[] = [];
+    noticiasPolitica: Notice[] = [];
+    noticiasDeportes: Notice[] = [];
+
+    loading = true;
+    error: string | null = null;
+
+    constructor(private noticiasCache: NoticiasCacheService) { }
+
+    ngOnInit(): void {
+        this.cargarTendencias();
+    }
+
+    private cargarTendencias(): void {
+        this.noticiasCache.getNoticias('lifestyle').subscribe((tendencias: Notice[]) => {
+
+            this.noticiasTendencias = this.filtrarConFallback(tendencias);
+            this.cargarPolitica();
+        });
+    }
+
+    private cargarPolitica(): void {
+        this.noticiasCache.getNoticias('politica').subscribe((politica: Notice[]) => {
+            this.noticiasPolitica = this.filtrarConFallback(politica);
+            this.cargarDeportes();
+        });
+    }
+
+    private cargarDeportes(): void {
+        this.noticiasCache.getNoticias('sports').subscribe((deportes: Notice[]) => {
+            this.noticiasDeportes = this.filtrarConFallback(deportes);
+            this.loading = false;
+        });
+    }
+
+    private filtrarConFallback(noticias: Notice[]): Notice[] {
+        const conImagen = noticias.filter(n => !!n.imagen);
+        return conImagen.length ? conImagen.slice(0, 6) : noticias.slice(0, 6);
+    }
 }

@@ -2,12 +2,22 @@
 front/node_modules/
 front/dist/
 front/.angular/
+/src/environments/environment*.ts
+!src/environments/environment.example.ts
+**/environment*.ts
+
+
 
 # Backend (Python o Node)
 back/venv/
 back/env/
 back/__pycache__/
 back/node_modules/
+.env
+.env.local
+.env.development
+.env.production
+.env.*.local
 
 # Comunes
 .env

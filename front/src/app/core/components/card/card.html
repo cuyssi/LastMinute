@@ -1,17 +1,13 @@
-<div class="card bg-dynamic text-dynamic border border-gray-500 shadow-xl rounded overflow-hidden">
-  <figure class="w-full aspect-[4/3]">
-    <img [src]="img" alt="Shoes" class="w-full h-full object-cover" />
+<div
+  class="card w-full h-full bg-dynamic text-dynamic border-2 subborder-dynamic shadow-2xl rounded overflow-hidden"
+>
+  <figure class="w-full aspect-4/3">
+    <img [src]="img" alt="Imagen" class="w-full h-full object-cover rounded-lg" />
   </figure>
-  <div class="card-body">
-    <h2 class="card-title">Lorem ipsum</h2>
-    <p>
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-      been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
-      galley of type and scrambled it to make a type specimen book.
-    </p>
-    <div class="card-actions justify-end">
-      <div class="badge badge-outline">Nacional</div>
-      <div class="badge badge-outline">Sucesos</div>
-    </div>
+  <div class="card-body p-4 mb-4">
+    <h3 class="h-2/3 text-2xl text-left titleText-dynamic font-semibold mb-2" *ngIf="title">
+      {{ title }}
+    </h3>
+    <p *ngIf="resumen" class="h-1/3 text-base text-justify">{{ resumen }}</p>
   </div>
 </div>
