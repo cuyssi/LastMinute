@@ -12,4 +12,5 @@ export class Card {
     @Input() img!: string;
     @Input() title?: string;
     @Input() resumen?: string;
+    @Input() id?: number;    
 }

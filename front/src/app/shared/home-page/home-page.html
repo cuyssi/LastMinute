@@ -1,19 +1,17 @@
-<app-carousel></app-carousel>
-
-<main class="mt-8 flex flex-col lg:flex-row w-full h-full justify-between p-4 gap-12">
-  <section class="order-1 lg:order-0 flex flex-col w-full h-full justify-between gap-4 px-8">
+<main class="mt-8 flex w-full h-full p-4">
+  <section class="flex flex-col w-full h-full justify-between gap-4 px-10">
     <div class="subbg-dynamic subtext-dynamic p-4 border-2 border-dynamic rounded">
       <h2 class="text-2xl font-extrabold">Política</h2>
     </div>
 
     <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-      @if(!loading && noticiasPolitica.length > 0) { @for(noticia of noticiasPolitica; track
-      noticia.titulo) {
-      <article class="h-full">
+      @if(!loading && noticiasPolitica.length > 0) { @for(news of noticiasPolitica; track
+      news.titulo) {
+      <article class="h-full" [routerLink]="['/news']" [state]="{ news: news }">
         <app-card
-          [img]="noticia.imagen || 'assets/placeholder.jpg'"
-          [title]="noticia.titulo || 'Sin título'"
-          [resumen]="noticia.resumen || '' | truncateInteligente : 120"
+          [img]="news.imagen || 'assets/placeholder.jpg'"
+          [title]="news.titulo || 'Sin título'"
+          [resumen]="news.resumen || '' | truncateInteligente : 120"
         />
       </article>
       } } @else {
@@ -26,34 +24,14 @@
     </div>
 
     <div class="mt-2 grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-8">
-      @if(!loading && noticiasDeportes.length > 0) {@for(noticia of noticiasDeportes; track
-      noticia.titulo) {
+      @if(!loading && noticiasDeportes.length > 0) {@for(news of noticiasDeportes; track
+      news.titulo) {
       <article class="h-full">
-        <app-hero [img]="noticia.imagen || ''" [title]="noticia.titulo || ''" />
+        <app-hero [img]="news.imagen || ''" [title]="news.titulo || ''" />
       </article>
       } } @else {
       <p class="text-center text-gray-500">Cargando noticias...</p>
       }
     </div>
   </section>
-
-  <aside
-    class="order-2 lg:order-0 flex flex-col subbg-dynamic border-2 border-dynamic w-full h-auto lg:w-1/3 p-6 pb-4 rounded-lg shadow-lg"
-  >
-    <h2 class="mt-7 text-center text-3xl subtext-dynamic font-extrabold">Tendencias</h2>
-    <section class="mt-8 flex flex-col gap-8">
-      @if(!loading && noticiasTendencias.length > 0) { @for(noticia of noticiasTendencias; track
-      noticia.titulo) {
-      <article>
-        <app-card
-          [img]="noticia.imagen || 'assets/placeholder.jpg'"
-          [title]="noticia.titulo || 'Sin título'"
-          [resumen]="noticia.resumen || '' | truncateInteligente : 120"
-        />
-      </article>
-      } } @else {
-      <p class="text-center text-gray-500">Cargando noticias...</p>
-      }
-    </section>
-  </aside>
 </main>

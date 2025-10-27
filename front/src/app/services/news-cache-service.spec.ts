@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { NoticiasCacheService } from './noticias-cache-service';
+import { NoticiasCacheService } from './news-cache-service';
 
 describe('NoticiasCacheService', () => {
     let service: NoticiasCacheService;

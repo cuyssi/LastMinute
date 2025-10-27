@@ -21,6 +21,6 @@ get:
             application/json:
                 example:
                     - titulo: "España arrasa en la Final 8"
-                      url: "https://sport.es/noticia"
+                      url: "https://sport.es/news"
                       fecha: "2025-10-25"
                       sentimiento: null

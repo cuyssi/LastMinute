@@ -3,11 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
-export interface Notice {
+export interface News {
     titulo: string;
     url: string;
     fecha: string;
-    sentimiento: string;
+    sentimiento?: string;
     imagen?: string;
     autor?: string[];
     resumen?: string;
@@ -17,15 +17,15 @@ export interface Notice {
 @Injectable({
     providedIn: 'root'
 })
-export class NoticesService {
+export class NewsService {
 
     private apiUrl = environment.apiUrl;
 
     constructor(private http: HttpClient) { }
 
-    getNoticias(pais: string = 'es', categoria: string = 'general'): Observable<Notice[]> {
+    getNews(pais: string = 'es', categoria: string = 'general'): Observable<News[]> {
         const url = `${this.apiUrl}?pais=${encodeURIComponent(pais)}&categoria=${encodeURIComponent(categoria)}`;
         console.log('➡️ Llamando a:', url);
-        return this.http.get<Notice[]>(url);
+        return this.http.get<News[]>(url);
     }
 }
