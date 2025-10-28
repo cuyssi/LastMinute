@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, switchMap, tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { News } from './news';
 import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
-export class NoticiasCacheService {
-
+export class NewsService {
     private apiUrl = environment.apiUrl;
 
     private mockNoticias: News[] = [
         {
+            id: "1",
             imagen: 'https://images.pexels.com/photos/264600/pexels-photo-264600.jpeg',
             titulo: 'News Mock 1',
             url: 'https://example.com/mock1',
@@ -26,6 +26,7 @@ Nulla facilisi. Phasellus ultrices metus at ante auctor, ac tempor ex ornare. Mo
 
         },
         {
+            id: "2",
             imagen: 'https://images.pexels.com/photos/34174906/pexels-photo-34174906.jpeg',
             titulo: 'News Mock 2',
             url: 'https://example.com/mock2',
@@ -40,6 +41,7 @@ Nulla facilisi. Phasellus ultrices metus at ante auctor, ac tempor ex ornare. Mo
 
         },
         {
+            id: "3",
             imagen: 'https://images.pexels.com/photos/34335702/pexels-photo-34335702.jpeg',
             titulo: 'News Mock 2',
             url: 'https://example.com/mock2',
@@ -55,6 +57,7 @@ Nulla facilisi. Phasellus ultrices metus at ante auctor, ac tempor ex ornare. Mo
         },
 
         {
+            id: "4",
             imagen: 'https://images.pexels.com/photos/264600/pexels-photo-264600.jpeg',
             titulo: 'News Mock 1',
             url: 'https://example.com/mock1',
@@ -69,6 +72,7 @@ Nulla facilisi. Phasellus ultrices metus at ante auctor, ac tempor ex ornare. Mo
 
         },
         {
+            id: "5",
             imagen: 'https://images.pexels.com/photos/34174906/pexels-photo-34174906.jpeg',
             titulo: 'News Mock 2',
             url: 'https://example.com/mock2',
@@ -83,6 +87,7 @@ Nulla facilisi. Phasellus ultrices metus at ante auctor, ac tempor ex ornare. Mo
 
         },
         {
+            id: "6",
             imagen: 'https://images.pexels.com/photos/34342327/pexels-photo-34342327.jpeg',
             titulo: 'News Mock 2',
             url: 'https://example.com/mock2',
@@ -103,16 +108,10 @@ Nulla facilisi. Phasellus ultrices metus at ante auctor, ac tempor ex ornare. Mo
 
     getNews(categoria: string): Observable<News[]> {
         return this.http.get<News[]>(`${this.apiUrl}?categoria=${categoria}`).pipe(
-            tap(data => {
-                if (!data || data.length === 0) {
-                    console.warn(`API ${categoria} vacía, usando mock`);
-                }
-            }),
             catchError(err => {
-                console.warn(`Error API ${categoria}, usando mock`, err);
-                return of([]);
-            }),
-            switchMap(data => data && data.length > 0 ? of(data) : of(this.mockNoticias.filter(n => n.categoria === categoria)))
+                console.warn(`⚠️ Error al cargar ${categoria}, usando mock`, err);
+                return of(this.mockNoticias.filter(n => n.categoria === categoria));
+            })
         );
     }
 }

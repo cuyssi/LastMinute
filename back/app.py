@@ -5,22 +5,22 @@ from worldnewsapi.rest import ApiException
 from flasgger import Swagger, swag_from
 from dotenv import load_dotenv
 import os
+import time
 
 load_dotenv()
 
 api_key = os.getenv('WORLDNEWS_API_KEY')
 
-
 app = Flask(__name__)
 CORS(app)
-
 swagger = Swagger(app)
 
+noticias_cache = {}
+CACHE_TTL = 60 * 60 * 24
 
 @app.route("/api/api")
 def api():
     return "hola soy el back"
-
 
 @app.route("/api/noticias")
 @swag_from("docs/noticias.yml")
@@ -28,6 +28,14 @@ def noticias():
     pais = request.args.get("pais", "es")
     categoria = request.args.get("categoria", "general")
     query = categoria
+    cache_key = f"{pais}_{categoria}"
+
+    if cache_key in noticias_cache:
+        cached = noticias_cache[cache_key]
+        if time.time() - cached["timestamp"] < CACHE_TTL:
+            print(f"🧠 Usando caché para {cache_key}")
+            return jsonify(cached["data"])
+
     config = worldnewsapi.Configuration(api_key={"apiKey": api_key})
     api = worldnewsapi.NewsApi(worldnewsapi.ApiClient(config))
 
@@ -55,14 +63,19 @@ def noticias():
             for n in response.news
         ]
 
+        noticias_cache[cache_key] = {
+            "timestamp": time.time(),
+            "data": noticias_filtradas
+        }
+
         return jsonify(noticias_filtradas)
 
     except ApiException as e:
+        print(f"⚠️ Error al llamar a WorldNewsAPI: {e}")
         return (
             jsonify({"error": "Falló la conexión con WorldNewsAPI", "detalle": str(e)}),
             500,
         )
-
 
 if __name__ == "__main__":
     app.run(debug=True)

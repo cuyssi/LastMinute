@@ -4,7 +4,7 @@ import { News } from '../../services/news';
 import { Card } from '../../core/components/card/card';
 import { Hero } from '../../core/components/hero/hero';
 import { TruncateInteligentePipe } from '../pipes/truncate-inteligente.pipe';
-import { NoticiasCacheService } from '../../services/news-cache-service';
+import { NewsService } from '../../services/news-service';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -28,7 +28,7 @@ export default class HomePage implements OnInit {
     loading = true;
     error: string | null = null;
 
-    constructor(private noticiasCache: NoticiasCacheService) { }
+    constructor(private noticiasCache: NewsService) { }
 
     ngOnInit(): void {
         this.cargarTendencias();

@@ -9,6 +9,6 @@ export const routes: Routes = [
     {path: 'home', component: HomePage},
     {path: 'portfolio', component: PortfolioPage},
     {path: 'about', component: AboutPage},
-    {path: 'news', component: NewsPage},
+    {path: 'news/:id', component: NewsPage},
     {path: '**', redirectTo: ''}
 ];

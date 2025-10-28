@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 export interface News {
+    id: string;
     titulo: string;
     url: string;
     fecha: string;
