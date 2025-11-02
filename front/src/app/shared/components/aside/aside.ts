@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { News } from '../../../services/news';
+
 import { Card } from '../../../core/components/card/card';
 import { TruncateInteligentePipe } from '../../pipes/truncate-inteligente.pipe';
 import { RouterLink } from '@angular/router';
 import { NewsService } from '../../../services/news-service';
+import { News } from '../../../core/interfaces/new-interface';
 
 @Component({
     selector: 'app-aside',
@@ -20,8 +21,8 @@ export class Aside implements OnInit {
     constructor(private cache: NewsService) { }
 
     ngOnInit() {
-
-        this.cache.getNews('lifestyle').subscribe({
+    setTimeout(() => {
+        this.cache.getNews('es', 'lifestyle').subscribe({
             next: (noticias: News[]) => {
                 this.noticiasTendencias = noticias.slice(0, 5);
                 this.loading = false;
@@ -31,6 +32,6 @@ export class Aside implements OnInit {
                 this.loading = false;
             }
         });
-
-    }
+    }, 3000);
+}
 }

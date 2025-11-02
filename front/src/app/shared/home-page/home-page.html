@@ -1,41 +1,21 @@
-<main class="mt-8 flex w-full h-full p-4">
-  <section class="flex flex-col w-full h-full justify-between gap-4 px-10">
-    <div class="subbg-dynamic subtext-dynamic p-4 border-2 border-dynamic rounded">
-      <h2 class="text-2xl font-extrabold">Política</h2>
-    </div>
+<main class="mt-6 flex w-full h-full pt-5 pb-0">
+  <section class="flex flex-col w-full h-full justify-between gap-4 px-15">
 
-    <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-      @if(!loading && noticiasPolitica.length > 0) { @for(news of noticiasPolitica; track
-      news.titulo) {
-      <a [routerLink]="['/news', news.id]" [state]="{ news: news }" class="block h-full">
-        <article class="h-full">
-          <app-card
-            [img]="news.imagen || 'assets/placeholder.jpg'"
-            [title]="news.titulo || 'Sin título'"
-            [resumen]="news.resumen || '' | truncateInteligente : 120"
-          />
-        </article>
-      </a>
-      } } @else {
-      <p class="text-center text-gray-500">Cargando noticias...</p>
-      }
-    </div>
+    <app-new-section
+      [loading]="loadingPolitica()"
+      [noticias]="noticiasPolitica()"
+      titulo="Politica"
+      [arraySkeleton]="arrayPolitica"
+      tipo="card"
+    />
 
-    <div class="mt-35 subbg-dynamic subtext-dynamic p-4 border-2 border-dynamic rounded">
-      <h2 class="text-2xl font-extrabold">Deportes</h2>
-    </div>
-
-    <div class="mt-2 grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-8">
-      @if(!loading && noticiasDeportes.length > 0) {@for(news of noticiasDeportes; track
-      news.titulo) {
-      <a [routerLink]="['/news', news.id]" [state]="{ news: news }" class="block h-full">
-        <article class="h-full">
-          <app-hero [img]="news.imagen || ''" [title]="news.titulo || ''" />
-        </article>
-      </a>
-      } } @else {
-      <p class="text-center text-gray-500">Cargando noticias...</p>
-      }
-    </div>
+    <app-new-section
+      [loading]="loadingDeportes()"
+      [noticias]="noticiasDeportes()"
+      titulo="Deportes"
+      [arraySkeleton]="arrayHome"
+      class="mt-30"
+      tipo="hero"
+    />
   </section>
 </main>

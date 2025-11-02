@@ -1,8 +1,9 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRouteSnapshot, RouterLink } from '@angular/router';
-import { News } from '../../../../services/news';
+
 import { NgIf } from '@angular/common';
 import { Subscription, filter } from 'rxjs';
+import { News } from '../../../interfaces/new-interface';
 
 @Component({
     selector: 'app-news-page',

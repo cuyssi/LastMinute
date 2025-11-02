@@ -1,68 +1,60 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
-import { News } from '../../services/news';
-import { Card } from '../../core/components/card/card';
-import { Hero } from '../../core/components/hero/hero';
-import { TruncateInteligentePipe } from '../pipes/truncate-inteligente.pipe';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { NewsService } from '../../services/news-service';
-import { RouterLink } from '@angular/router';
+import { News } from '../../core/interfaces/new-interface';
+import { NewSection } from '../components/new-section/new-section';
 
 @Component({
-    selector: 'app-home-page',
-    standalone: true,
-    imports: [
-        HttpClientModule,
-        Card,
-        Hero,
-        TruncateInteligentePipe,
-        RouterLink,
-    ],
-    templateUrl: './home-page.html',
-    styleUrls: ['./home-page.css']
+  selector: 'app-home-page',
+  standalone: true,
+  imports: [
+    NewSection
+  ],
+  templateUrl: './home-page.html',
+  styleUrls: ['./home-page.css']
 })
 export default class HomePage implements OnInit {
-    noticiasTendencias: News[] = [];
-    noticiasPolitica: News[] = [];
-    noticiasDeportes: News[] = [];
+  noticiasPolitica = signal<News[]>([]);
+  noticiasDeportes = signal<News[]>([]);
+  loadingPolitica = signal<boolean>(true);
+  loadingDeportes = signal<boolean>(true);
+  noticiasFiltradas = signal<News[]>([]);
+  arrayHome: number = 4
+  arrayPolitica: number = 6
+  tipoNoticias: string[] = ['politica', 'deportes'];
 
-    loading = true;
-    error: string | null = null;
+  readonly noticiasService = inject(NewsService);
 
-    constructor(private noticiasCache: NewsService) { }
+  ngOnInit(): void {
+    this.cargarNoticias();
+  }
 
-    ngOnInit(): void {
-        this.cargarTendencias();
+  cargarNoticias() {
+    for (const tipo of this.tipoNoticias) {
+      this.noticiasService.getNews('es',tipo).subscribe({
+        next: (data: News[]) => {
+          setTimeout(() => {
+            const filtradas = this.filtrarConFallback(data);
+
+            if (tipo === 'politica') {
+              this.noticiasPolitica.set(filtradas);
+              this.loadingPolitica.set(false);
+            } else if (tipo === 'deportes') {
+              this.noticiasDeportes.set(filtradas);
+              this.loadingDeportes.set(false);
+            }
+          }, 3000);
+        },
+        error: (err) => {
+          console.log(`Error cargando noticias de ${tipo}: ${err.message}`)
+          if (tipo === 'politica') this.loadingPolitica.set(false);
+          if (tipo === 'deportes') this.loadingDeportes.set(false);
+        }
+      });
     }
+  }
 
-    private cargarTendencias(): void {
-        this.noticiasCache.getNews('lifestyle').subscribe((tendencias: News[]) => {
-            this.noticiasTendencias = this.filtrarConFallback(tendencias);
-            this.cargarPolitica();
-        });
-    }
-
-    private cargarPolitica(): void {
-        this.noticiasCache.getNews('politica').subscribe((politica: News[]) => {
-            this.noticiasPolitica = this.filtrarConFallback(politica);
-            this.cargarDeportes();
-        });
-    }
-
-    private cargarDeportes(): void {
-        this.noticiasCache.getNews('sports').subscribe((deportes: News[]) => {
-            this.noticiasDeportes = this.filtrarConFallback(deportes);
-            this.loading = false;
-        });
-    }
-
-    private filtrarConFallback(noticias: News[]): News[] {
-        const conImagen = noticias.filter(n => !!n.imagen);
-        return conImagen.length ? conImagen.slice(0, 6) : noticias.slice(0, 6);
-    }
-
-    @Input() img!: string;
-    @Input() title?: string;
-    @Input() resumen?: string;
-    @Input() url?: string;
-    @Input() news?: News;
+  private filtrarConFallback(noticias: News[]): News[] {
+    const conImagen = noticias.filter(n => !!n.imagen);
+    return conImagen.length ? conImagen.slice(0, 6) : noticias.slice(0, 6);
+  }
 }
