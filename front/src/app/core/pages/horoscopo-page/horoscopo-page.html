@@ -1,0 +1,19 @@
+<main class="mt-11">
+  <app-info-section title="Horóscopo" />
+  <section
+    class="mt-10 flex flex-col lg:flex-row w-full h-full justify-center items-center p-4 py-5 bg-dynamic border-2 border-dynamic shadow-2xl rounded-lg overflow-hidden"
+  >
+    <section class="p-2 w-full h-full">
+      <div class="w-full h-full gap-8 p-8 pb-0 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        @if (loading()) { @for (_ of skeletonArray; track $index) {
+        <app-skeleton />
+        } } @else if (horoscopos().length > 0) { @for (h of horoscopos(); track h.signo) {
+
+        <app-simple-card [title]="h.signo" [resumen]="h.horoscopo" />
+        } } @else {
+        <app-no-news title="Horóscopos" />
+        }
+      </div>
+    </section>
+  </section>
+</main>

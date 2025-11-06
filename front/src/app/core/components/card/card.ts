@@ -9,8 +9,8 @@ import { NgIf } from '@angular/common';
     styleUrls: ['./card.css'],
 })
 export class Card {
-    @Input() img!: string;
+    @Input() img?: string;
     @Input() title?: string;
     @Input() resumen?: string;
-    @Input() id?: number;    
+    @Input() id?: number;
 }

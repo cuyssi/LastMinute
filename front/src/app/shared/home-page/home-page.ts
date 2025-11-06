@@ -12,13 +12,14 @@ import { NewSection } from '../components/new-section/new-section';
   templateUrl: './home-page.html',
   styleUrls: ['./home-page.css']
 })
+
 export default class HomePage implements OnInit {
   noticiasPolitica = signal<News[]>([]);
   noticiasDeportes = signal<News[]>([]);
   loadingPolitica = signal<boolean>(true);
   loadingDeportes = signal<boolean>(true);
   noticiasFiltradas = signal<News[]>([]);
-  arrayHome: number = 4
+  arrayHome: number = 6
   arrayPolitica: number = 6
   tipoNoticias: string[] = ['politica', 'deportes'];
 
@@ -26,6 +27,7 @@ export default class HomePage implements OnInit {
 
   ngOnInit(): void {
     this.cargarNoticias();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   cargarNoticias() {

@@ -11,14 +11,11 @@ export class NewsService {
     private apiUrl = environment.apiUrl;
     readonly #http = inject(HttpClient)
 
-
-
-
     getNews(pais: string = 'es', categoria: string = 'general'): Observable<News[]> {
   return this.#http
-    .get<News[]>(`${this.apiUrl}?pais=${encodeURIComponent(pais)}&categoria=${encodeURIComponent(categoria)}`)
+    .get<News[]>(`${this.apiUrl}/noticias?pais=${encodeURIComponent(pais)}&categoria=${encodeURIComponent(categoria)}`)
     .pipe(
-      delay(3000), // ⏱️ espera 1 segundo antes de emitir los datos
+      delay(1000),
       catchError(err => {
         console.warn(`⚠️ Error al cargar ${categoria}, usando mock`, err);
         return of(mockNoticias.filter(n => n.categoria === categoria));

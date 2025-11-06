@@ -10,16 +10,16 @@
 
 :root[data-theme='light'] {
   --bg-dynamic: #afaaaf;
-  --subbg-dynamic: #ebd6d1;  
+  --subbg-dynamic: #ebd6d1;
   --text-dynamic: #454648;
-  --titleText-dynamic: #454648;
+  --titleText-dynamic: #503535;
   --subtext-dynamic: #d04242;
   --border-dynamic: gray;
 }
 
 :root[data-theme='dark'] {
   --bg-dynamic: #727679;
-  --subbg-dynamic: #69818d; 
+  --subbg-dynamic: #69818d;
   --text-dynamic: #f9fafb;
   --titleText-dynamic: #503535;
   --subtext-dynamic: #852727;

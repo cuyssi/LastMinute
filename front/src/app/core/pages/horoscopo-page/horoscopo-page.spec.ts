@@ -1,18 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import HoroscopoPage from './horoscopo-page';
 
-import { PortfolioPage } from './portfolio-page';
 
-describe('PortfolioPage', () => {
-  let component: PortfolioPage;
-  let fixture: ComponentFixture<PortfolioPage>;
+describe('HoroscopoPage', () => {
+  let component: HoroscopoPage;
+  let fixture: ComponentFixture<HoroscopoPage>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PortfolioPage]
-    })
-    .compileComponents();
+      imports: [HoroscopoPage],
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(PortfolioPage);
+    fixture = TestBed.createComponent(HoroscopoPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

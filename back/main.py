@@ -2,17 +2,15 @@ from flask import Flask
 from flask_cors import CORS
 from dotenv import load_dotenv
 from routes.noticias_routes import noticias_bp
-# import os
+from routes.horoscope_routes import horoscopo_bp
 
-# Cargar variables de entorno
 load_dotenv()
 
-# Inicializar app
 app = Flask(__name__)
 CORS(app)
 
-# Importar rutas
 app.register_blueprint(noticias_bp, url_prefix="/api")
+app.register_blueprint(horoscopo_bp, url_prefix='/api')
 
 
 @app.route("/api/api")

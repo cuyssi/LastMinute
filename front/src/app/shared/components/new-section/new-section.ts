@@ -3,13 +3,14 @@ import { News } from '../../../core/interfaces/new-interface';
 import { NoNews } from '../no-news/no-news';
 import { Hero } from '../../../core/components/hero/hero';
 import { RouterLink } from '@angular/router';
-import { Skeleton } from '../skeleton/skeleton.';
+import { Skeleton } from '../skeleton/skeleton';
 import { Card } from '../../../core/components/card/card';
 import { CommonModule } from '@angular/common';
+import { InfoSection } from "../../../core/components/info-section/info-section";
 
 @Component({
   selector: 'app-new-section',
-  imports: [RouterLink, CommonModule, NoNews, Hero, Skeleton, Card],
+  imports: [RouterLink, CommonModule, NoNews, Hero, Skeleton, Card, InfoSection],
   templateUrl: './new-section.html',
   styleUrl: './new-section.css',
 })
